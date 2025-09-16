@@ -10,9 +10,9 @@ driverstand=pd.read_csv("../data/driver_standings.csv")
 drivers=pd.read_csv('../data/drivers.csv')
 #weather=pd.read_csv('../F1_Weather.csv')
 pitstops=pd.read_csv('../data/pit_stops.csv')
-qualifying=pd.read_csv('../data/qualifying.csv')
+qualifying=pd.read_csv('../data/qualifying.csv',na_values='\\N')
 races=pd.read_csv('../data/races.csv')
-results=pd.read_csv('../data/results.csv')
+results=pd.read_csv('../data/results.csv',na_values='\\N')
 seasons=pd.read_csv('../data/seasons.csv')
 sprintresults=pd.read_csv('../data/sprint_results.csv')
 status=pd.read_csv('../data/status.csv')
@@ -54,7 +54,7 @@ def clean_driver(df):
 
 # Fonction pour nettoyer drivers stranding
 def clean_driver_standing(df):
-    columns_to_keep = [col for col in ['raceId', 'driverId','points','position'] if col in df.columns]
+    columns_to_keep = [col for col in ['raceId', 'driverId','points','position','wins'] if col in df.columns]
     df = df[columns_to_keep]
     df = df.dropna()
     return df
@@ -135,8 +135,8 @@ status_clean=clean_status(status)
 circuits_clean.to_csv("../data/cleaned/circuits_clean.csv", index=False)
 constructor_results_clean.to_csv("../data/cleaned/constructor_results_clean.csv", index=False)
 constructor_standings_clean.to_csv("../data/cleaned/constructor_standings_clean.csv", index=False)
-constructors.to_csv("../data/cleaned/constructors_clean.csv", index=False)
-driverstand.to_csv("../data/cleaned/drivers_standings_clean.csv", index=False)
+constructors_clean.to_csv("../data/cleaned/constructors_clean.csv", index=False)
+driversstand_clean.to_csv("../data/cleaned/drivers_standings_clean.csv", index=False)
 drivers_clean.to_csv("../data/cleaned/drivers_clean.csv", index=False)
 #weather_clean.to_csv("../data/cleaned/F1_Weather_clean.csv", index=False)
 pitstops_clean.to_csv("../data/cleaned/pit_stops_clean.csv", index=False)
@@ -144,6 +144,6 @@ qualifying_clean.to_csv("../data/cleaned/qualifying_clean.csv", index=False)
 races_clean.to_csv("../data/cleaned/races_clean.csv", index=False)
 results_clean.to_csv("../data/cleaned/results_clean.csv", index=False)
 seasons_clean.to_csv("../data/cleaned/seasons_clean.csv", index=False)
-sprintresults.to_csv("../data/cleaned/sprint_results_clean.csv", index=False)
+sprintresults_clean.to_csv("../data/cleaned/sprint_results_clean.csv", index=False)
 status_clean.to_csv("../data/cleaned/status_clean.csv", index=False)
 print("Nettoyage terminé et fichiers sauvegardés dans data/cleaned !")
