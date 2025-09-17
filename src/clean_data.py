@@ -8,7 +8,7 @@ constructor_standings = pd.read_csv("../data/constructor_standings.csv")
 constructors=pd.read_csv("../data/constructors.csv")
 driverstand=pd.read_csv("../data/driver_standings.csv")
 drivers=pd.read_csv('../data/drivers.csv')
-#weather=pd.read_csv('../F1_Weather.csv')
+weather=pd.read_csv('../data/F1_Weather.csv')
 pitstops=pd.read_csv('../data/pit_stops.csv')
 qualifying=pd.read_csv('../data/qualifying.csv',na_values='\\N')
 races=pd.read_csv('../data/races.csv')
@@ -40,14 +40,14 @@ def clean_constructor_standings(df):
 
 # Fonction pour nettoyer constructors
 def clean_constructors(df):
-    columns_to_keep = [col for col in ['constructorId', 'constructorRef'] if col in df.columns]
+    columns_to_keep = [col for col in ['constructorId', 'constructorRef','name'] if col in df.columns]
     df = df[columns_to_keep]
     df = df.dropna()
     return df
 
 # Fonction pour nettoyer drivers
 def clean_driver(df):
-    columns_to_keep = [col for col in ['driverId', 'driverRef'] if col in df.columns]
+    columns_to_keep = [col for col in ['driverId', 'driverRef','forename','surname'] if col in df.columns]
     df = df[columns_to_keep]
     df = df.dropna()
     return df
@@ -60,8 +60,8 @@ def clean_driver_standing(df):
     return df
 
 # Fonction pour nettoyer weather
-#def clean_weather(df):
-    columns_to_keep = [col for col in ['AirTemp', 'Humidity','Rainfall','TrackTemp','WindSpeed','Pressure'] if col in df.columns]
+def clean_weather(df):
+    columns_to_keep = [col for col in ['AirTemp', 'Humidity','Rainfall','TrackTemp','WindSpeed','Pressure','Year','Round Number'] if col in df.columns]
     df = df[columns_to_keep]
     df = df.dropna()
     return df
@@ -82,14 +82,14 @@ def clean_qualifying(df):
 
 # Fonction pour nettoyer races
 def clean_races(df):
-    columns_to_keep = [col for col in ['qualifyId','raceId', 'driverId', 'constructorId','position','q1','q2','q3'] if col in df.columns]
+    columns_to_keep = [col for col in ['raceId', 'year', 'round','circuitId','name'] if col in df.columns]
     df = df[columns_to_keep]
     df = df.dropna()
     return df
 
 # Fonction pour nettoyer results
 def clean_results(df):
-    columns_to_keep = [col for col in ['grid','position', 'points', 'laps','fastestLapTime','fastestLapSpeed','statusId'] if col in df.columns]
+    columns_to_keep = [col for col in ['raceId','driverId', 'constructorId', 'grid','positionOrder','points','statusId'] if col in df.columns]
     df = df[columns_to_keep]
     df = df.dropna()
     return df
@@ -103,7 +103,7 @@ def clean_seasons(df):
 
 # Fonction pour nettoyer sprint results
 def clean_sprint_result(df):
-    columns_to_keep = [col for col in ['raceId','constructorId','grid','position','laps','milliseconds','fatestLapTime','points'] if col in df.columns]
+    columns_to_keep = [col for col in ['raceId','constructorId','grid','position','laps','milliseconds','fastestLapTime','points'] if col in df.columns]
     df = df[columns_to_keep]
     df = df.dropna()
     return df
@@ -122,7 +122,7 @@ constructor_standings_clean = clean_constructor_standings(constructor_standings)
 constructors_clean=clean_constructors(constructors)
 driversstand_clean=clean_driver_standing(driverstand)
 drivers_clean=clean_driver(drivers)
-#weather_clean=clean_weather(weather)
+weather_clean=clean_weather(weather)
 pitstops_clean=clean_pit_stops(pitstops)
 qualifying_clean=clean_qualifying(qualifying)
 races_clean=clean_races(races)
@@ -138,7 +138,7 @@ constructor_standings_clean.to_csv("../data/cleaned/constructor_standings_clean.
 constructors_clean.to_csv("../data/cleaned/constructors_clean.csv", index=False)
 driversstand_clean.to_csv("../data/cleaned/drivers_standings_clean.csv", index=False)
 drivers_clean.to_csv("../data/cleaned/drivers_clean.csv", index=False)
-#weather_clean.to_csv("../data/cleaned/F1_Weather_clean.csv", index=False)
+weather_clean.to_csv("../data/cleaned/F1_Weather_clean.csv", index=False)
 pitstops_clean.to_csv("../data/cleaned/pit_stops_clean.csv", index=False)
 qualifying_clean.to_csv("../data/cleaned/qualifying_clean.csv", index=False)
 races_clean.to_csv("../data/cleaned/races_clean.csv", index=False)
